@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-slate-900 font-sans antialiased overflow-hidden w-screen h-screen;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.07) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, rgba(30, 58, 138, 0.02) 0px, transparent 60%),
+      radial-gradient(at 100% 0%, rgba(30, 58, 138, 0.07) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F9FA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E2E8F0;
+  border: 1px solid #F8F9FA;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1E3A8A;
+}
+
+/* Glassmorphism custom classes for light mode */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(30, 58, 138, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(30, 58, 138, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(30, 58, 138, 0.12), 0 0 20px rgba(30, 58, 138, 0.04);
+  transform: translateY(-2px);
+}
+
+.glow-navy {
+  box-shadow: 0 0 24px rgba(30, 58, 138, 0.15);
+}
+
+.glow-white {
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.8);
+}
+
+/* Grid overlay background with navy grid lines */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(30, 58, 138, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 58, 138, 0.04) 1px, transparent 1px);
+}
+
+/* Custom CSS animations */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 35s linear infinite;
+}
+
+/* Hide scrollbar for clean dashboard feeds */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
