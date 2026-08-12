@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, HelpCircle, FileText, Compass, ExternalLink } from 'lucide-react';
+import { navigateToPortal } from '../utils/domain';
 
 export const Footer: React.FC = () => {
   return (
@@ -35,21 +36,34 @@ export const Footer: React.FC = () => {
             <h3 className="text-brand-white font-semibold uppercase tracking-wider text-xs mb-4">Integrated Portals</h3>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <a href="https://www.tgi360.org" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-brand-white transition-colors">
+                <button 
+                  onClick={() => navigateToPortal('facilities')} 
+                  className="flex items-center gap-1.5 hover:text-brand-white transition-colors text-left"
+                >
                   <Compass size={14} className="text-brand-blue" />
                   <span>Facilities Portal</span>
                   <ExternalLink size={10} />
-                </a>
+                </button>
               </li>
               <li>
-                <a href="https://hostel-portal-kappa.vercel.app" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-brand-white transition-colors">
+                <button 
+                  onClick={() => navigateToPortal('hostel')} 
+                  className="flex items-center gap-1.5 hover:text-brand-white transition-colors text-left"
+                >
                   <Compass size={14} className="text-brand-gold" />
                   <span>Hostel Management</span>
                   <ExternalLink size={10} />
-                </a>
+                </button>
               </li>
-              <li className="text-brand-white/40 cursor-not-allowed">
-                <span>Transportation Portal (Soon)</span>
+              <li>
+                <button 
+                  onClick={() => navigateToPortal('transportation')} 
+                  className="flex items-center gap-1.5 hover:text-brand-white transition-colors text-left"
+                >
+                  <Compass size={14} className="text-purple-400" />
+                  <span>Transportation Portal</span>
+                  <ExternalLink size={10} />
+                </button>
               </li>
             </ul>
           </div>

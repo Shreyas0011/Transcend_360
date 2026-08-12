@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
   mockActivityLogs, 
@@ -22,6 +23,7 @@ import {
 import { MobileBottomNav } from '../components/MobileBottomNav';
 
 export const DashboardPage: React.FC = () => {
+  const navigate = useNavigate();
   const { user, isAuthenticated, redirectToPortal, setCurrentView } = useAuth();
   
   // States
@@ -101,6 +103,7 @@ export const DashboardPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+
         {/* Welcome Section */}
         <header className="mb-8 p-6 rounded-3xl glass-panel flex flex-col md:flex-row md:items-center justify-between gap-6 glow-blue/5">
           <div className="flex items-center gap-4">
@@ -120,7 +123,7 @@ export const DashboardPage: React.FC = () => {
                 Welcome Back, {user.name}
               </h1>
               <p className="text-xs text-brand-textSecondary mt-0.5">
-                Role: {user.role} &bull; ID: {user.studentId || 'TR-ADMIN-5523'}
+                Role: {user.role} &bull; ID: {(user as any).employeeId || (user as any).studentId || 'TR-ADMIN-5523'}
               </p>
             </div>
           </div>
@@ -149,7 +152,11 @@ export const DashboardPage: React.FC = () => {
                     disabled={isComingSoon}
                     onClick={() => {
                       if (portal.url) {
-                        redirectToPortal(portal.url, portal.title);
+                        if (portal.url.startsWith('/')) {
+                          navigate(portal.url);
+                        } else {
+                          redirectToPortal(portal.url, portal.title);
+                        }
                       }
                     }}
                     className={`flex items-center justify-between p-5 rounded-2xl border transition-all text-left group ${

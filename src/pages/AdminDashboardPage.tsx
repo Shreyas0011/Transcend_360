@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { getPortalUrl } from '../utils/domain';
 import { 
   Users, 
   Home, 
@@ -20,7 +21,7 @@ interface PendingRequest {
   id: string;
   studentName: string;
   studentId: string;
-  portal: 'Hostel' | 'Facilities';
+  portal: 'Hostel' | 'Facilities' | 'Transportation';
   type: string;
   details: string;
   date: string;
@@ -34,7 +35,7 @@ export const AdminDashboardPage: React.FC = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       setCurrentView('landing');
-    } else if (user?.role !== 'Admin') {
+    } else if ((user?.role as any) !== 'Admin' && (user?.role as any) !== 'SuperAdmin') {
       setCurrentView('dashboard');
     }
   }, [isAuthenticated, user, setCurrentView]);
@@ -101,14 +102,14 @@ export const AdminDashboardPage: React.FC = () => {
         time: 'Just now',
         category: targetReq.portal.toLowerCase(),
         read: false,
-        actionUrl: targetReq.portal === 'Hostel' ? 'https://hostel-portal-kappa.vercel.app' : 'https://www.tgi360.org'
+        actionUrl: getPortalUrl(targetReq.portal.toLowerCase())
       };
 
       localStorage.setItem('t360_notifications', JSON.stringify([newNotif, ...currentNotifs]));
     }
   };
 
-  if (!user || user.role !== 'Admin') return null;
+  if (!user || ((user.role as any) !== 'Admin' && (user.role as any) !== 'SuperAdmin')) return null;
 
   return (
     <div className="relative min-h-screen bg-brand-bg pt-24 pb-28 md:pb-16">
@@ -298,7 +299,7 @@ export const AdminDashboardPage: React.FC = () => {
                       <div className="space-y-2">
                         <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
                           <span className={`px-2.5 py-0.5 rounded text-[10px] uppercase font-extrabold ${
-                            req.portal === 'Hostel' ? 'bg-brand-gold/20 text-brand-gold' : 'bg-brand-blue/20 text-brand-blue'
+                            req.portal === 'Hostel' ? 'bg-brand-gold/20 text-brand-gold' : req.portal === 'Transportation' ? 'bg-purple-500/20 text-purple-400' : 'bg-brand-blue/20 text-brand-blue'
                           }`}>
                             {req.portal} Portal
                           </span>

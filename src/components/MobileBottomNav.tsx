@@ -65,7 +65,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           <button
             onClick={() => {
               if (isAuthenticated) {
-                setCurrentView(user?.role === 'Admin' ? 'admin' : 'dashboard');
+                setCurrentView((user?.role as any) === 'Admin' || (user?.role as any) === 'SuperAdmin' ? 'admin' : 'dashboard');
               } else {
                 setIsLoginModalOpen(true);
               }
@@ -151,7 +151,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             </div>
 
             <div className="space-y-2">
-              {user.role === 'Admin' && (
+              {((user.role as any) === 'Admin' || (user.role as any) === 'SuperAdmin') && (
                 <button
                   onClick={() => {
                     setShowMiniProfile(false);

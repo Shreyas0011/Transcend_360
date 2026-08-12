@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Menu, X, LogOut, LayoutDashboard, Shield, ChevronDown } from 'lucide-react';
 import { SSOModal } from './SSOModal';
 
+import { navigateToPortal } from '../utils/domain';
+
 export const Navbar: React.FC = () => {
-  const { user, isAuthenticated, logout, currentView, setCurrentView } = useAuth();
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logout, currentView, setCurrentView, generateSSOToken } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -25,9 +29,8 @@ export const Navbar: React.FC = () => {
 
   const handleNavClick = (anchorId: string) => {
     setIsMobileMenuOpen(false);
-    if (currentView !== 'landing') {
-      setCurrentView('landing');
-      // Wait for view mount before scrolling
+    if (window.location.pathname !== '/') {
+      navigate('/');
       setTimeout(() => {
         const element = document.getElementById(anchorId.replace('#', ''));
         if (element) {
@@ -43,16 +46,9 @@ export const Navbar: React.FC = () => {
   };
 
   const navLinks = [
-    { name: 'Home', view: 'landing', action: () => setCurrentView('landing') },
-    { name: 'Services', view: 'services', action: () => handleNavClick('#services') },
-    { name: 'Dashboard', view: 'dashboard', action: () => {
-        if (isAuthenticated) {
-          setCurrentView(user?.role === 'Admin' ? 'admin' : 'dashboard');
-        } else {
-          setIsLoginModalOpen(true);
-        }
-      }
-    },
+    { name: 'Home', view: 'landing', action: () => navigate('/') },
+    { name: 'Dashboard', view: 'dashboard', action: () => navigate('/dashboard') },
+    { name: 'Hostel ERP', view: 'hostel', action: () => navigateToPortal('hostel', generateSSOToken('hostel')) },
     { name: 'Announcements', view: 'announcements', action: () => handleNavClick('#announcements') },
     { name: 'Support', view: 'support', action: () => handleNavClick('#support') },
   ];
@@ -72,7 +68,7 @@ export const Navbar: React.FC = () => {
             {/* Logo Button */}
             <div className="flex-shrink-0 flex items-center">
               <button 
-                onClick={() => setCurrentView('landing')} 
+                onClick={() => navigate('/')} 
                 className="flex items-center gap-2 group text-left"
               >
                 <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-brand-gold to-brand-lightGold flex items-center justify-center shadow-premium-gold transition-transform group-hover:scale-105">
@@ -161,7 +157,7 @@ export const Navbar: React.FC = () => {
                           <span>Services Dashboard</span>
                         </button>
 
-                        {user.role === 'Admin' && (
+                        {((user.role as any) === 'Admin' || (user.role as any) === 'SuperAdmin') && (
                           <button
                             onClick={() => {
                               setIsProfileDropdownOpen(false);
@@ -255,7 +251,7 @@ export const Navbar: React.FC = () => {
               <div className="border-t border-brand-white/5 pt-4 flex flex-col gap-3">
                 {isAuthenticated ? (
                   <>
-                    {user?.role === 'Admin' && (
+                    {((user?.role as any) === 'Admin' || (user?.role as any) === 'SuperAdmin') && (
                       <button
                         onClick={() => {
                           setIsMobileMenuOpen(false);

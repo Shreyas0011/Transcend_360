@@ -1,0 +1,47 @@
+// src/routes/RoleRoute.jsx
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ROUTES } from './routeConstants';
+
+export const getDashboardRedirect = (role) => {
+  switch (role) {
+    case 'Student': return ROUTES.STUDENT;
+    case 'Parent': return ROUTES.PARENT;
+    case 'Warden': return ROUTES.WARDEN;
+    case 'Admin': return ROUTES.ADMIN;
+    case 'SuperAdmin': return ROUTES.SUPERADMIN;
+    case 'MessManager': return ROUTES.MESS_MANAGER;
+    default: return ROUTES.LOGIN;
+  }
+};
+
+const RoleRoute = ({ children, allowedRoles }) => {
+  const { isAuthenticated: reduxAuth, user: reduxUser } = useSelector((state) => state.auth);
+  
+  let user = reduxUser;
+  if (!user) {
+    const storedUser = localStorage.getItem('t360_user');
+    if (storedUser) {
+      try {
+        user = JSON.parse(storedUser);
+      } catch (e) {
+        user = null;
+      }
+    }
+  }
+
+  const isAuthenticated = reduxAuth || !!user;
+
+  if (!isAuthenticated || !user) {
+    return <Navigate to={ROUTES.LOGIN} replace />;
+  }
+
+  if (!allowedRoles.includes(user.role)) {
+    return <Navigate to={getDashboardRedirect(user.role)} replace />;
+  }
+
+  return children;
+};
+
+export default RoleRoute;

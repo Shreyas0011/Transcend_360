@@ -48,7 +48,7 @@ export const servicePortals: ServicePortal[] = [
     description: 'Manage room bookings, auditorium reservations, sports facilities, and campus infrastructure requests.',
     features: ['Room Booking', 'Auditorium Booking', 'Sports Facilities', 'Approval Workflow'],
     status: 'active',
-    url: 'https://www.tgi360.org',
+    url: '/facilities',
     category: 'Infrastructure',
     iconName: 'Building2',
     gradient: 'from-blue-600/20 via-blue-500/10 to-transparent'
@@ -59,7 +59,7 @@ export const servicePortals: ServicePortal[] = [
     description: 'Manage hostel operations digitally with meal booking, leave requests, notifications, and attendance tracking.',
     features: ['Meal Booking', 'Leave Requests', 'Attendance', 'Hostel Notices'],
     status: 'active',
-    url: 'https://hostel-portal-kappa.vercel.app',
+    url: '/hostel',
     category: 'Student Life',
     iconName: 'Home',
     gradient: 'from-amber-600/20 via-amber-500/10 to-transparent'
@@ -69,7 +69,8 @@ export const servicePortals: ServicePortal[] = [
     title: 'Transportation Management',
     description: 'Manage transportation services, routes, buses, and travel requests.',
     features: ['Bus Tracking', 'Route Management', 'Travel Requests', 'Transport Notifications'],
-    status: 'coming_soon',
+    status: 'active',
+    url: '/transportation',
     category: 'Logistics',
     iconName: 'Bus',
     gradient: 'from-purple-600/20 via-purple-500/10 to-transparent'
@@ -268,7 +269,7 @@ export const mockNotifications: NotificationItem[] = [
     time: '10 mins ago',
     category: 'hostel',
     read: false,
-    actionUrl: 'https://hostel-portal-kappa.vercel.app'
+    actionUrl: 'http://hostel.localhost:5173'
   },
   {
     id: 'n2',
@@ -277,7 +278,7 @@ export const mockNotifications: NotificationItem[] = [
     time: '1 hour ago',
     category: 'facility',
     read: false,
-    actionUrl: 'https://www.tgi360.org'
+    actionUrl: 'http://facilities.localhost:5173'
   },
   {
     id: 'n3',
@@ -286,7 +287,7 @@ export const mockNotifications: NotificationItem[] = [
     time: '3 hours ago',
     category: 'transport',
     read: true,
-    actionUrl: '#'
+    actionUrl: 'http://transportation.localhost:5173'
   },
   {
     id: 'n4',

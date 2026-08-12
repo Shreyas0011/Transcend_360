@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 140" width="450" height="140">
+  <!-- Left Shield Emblem -->
+  <g transform="translate(10, 5)">
+    <!-- Outer Shield Border -->
+    <path d="M 22 14 C 52 14 112 14 122 14 C 122 74 112 118 72 144 C 32 118 22 74 22 14 Z" 
+          fill="none" stroke="#2b277e" stroke-width="7" stroke-linejoin="round" />
+    <!-- Inner Shield Solid Fill -->
+    <path d="M 30 22 C 55 22 105 22 114 22 C 114 70 105 110 72 134 C 39 110 30 70 30 22 Z" 
+          fill="#2b277e" />
+    <!-- Ornate Serif T -->
+    <text x="72" y="98" 
+          font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif" 
+          font-size="76" font-weight="900" fill="#ffffff" text-anchor="middle">T</text>
+  </g>
+
+  <!-- Right Side Typography -->
+  <!-- TRANSCEND -->
+  <text x="155" y="68" 
+        font-family="'Cinzel', 'Trajan Pro', 'Georgia', 'Times New Roman', serif" 
+        font-size="44" font-weight="800" fill="#2b277e" letter-spacing="3.5">TRANSCEND</text>
+  
+  <!-- Group of Institutions -->
+  <text x="155" y="108" 
+        font-family="'Georgia', 'Times New Roman', serif" 
+        font-size="28" font-weight="600" fill="#2b277e" letter-spacing="0.5">Group of Institutions</text>
+</svg>
