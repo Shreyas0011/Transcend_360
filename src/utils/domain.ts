@@ -20,27 +20,37 @@ export function getSubdomain(): PortalSubdomain {
 }
 
 /**
- * Constructs the target origin/URL for a given portal based on current environment (localhost vs production).
+ * Extracts the base domain from current hostname (e.g. hostel.transcend-360.vercel.app -> transcend-360.vercel.app)
+ */
+export function getBaseDomain(): string {
+  const hostname = window.location.hostname.toLowerCase();
+  if (hostname.startsWith('hostel.')) {
+    return hostname.substring('hostel.'.length);
+  }
+  if (hostname.startsWith('transportation.')) {
+    return hostname.substring('transportation.'.length);
+  }
+  if (hostname.startsWith('facilities.')) {
+    return hostname.substring('facilities.'.length);
+  }
+  return hostname;
+}
+
+/**
+ * Constructs the target origin/URL for a given portal based on current host environment.
+ * Supports Vercel deployments (e.g. hostel.transcend-360.vercel.app), custom domains (hostel.tgi360.org), and localhost (hostel.localhost:5173).
  */
 export function getPortalUrl(portalId: PortalSubdomain | string): string {
-  const { protocol, hostname, port } = window.location;
+  const { protocol, port } = window.location;
   const portSuffix = port ? `:${port}` : '';
-  const isLocal = hostname.includes('localhost') || hostname === '127.0.0.1' || hostname === '::1';
-
+  const baseDomain = getBaseDomain();
   const cleanPortalId = portalId.toLowerCase();
 
   if (cleanPortalId === 'main' || cleanPortalId === 'landing' || cleanPortalId === 'tgi360') {
-    if (isLocal) {
-      return `${protocol}//localhost${portSuffix}`;
-    }
-    return `${protocol}//tgi360.org`;
+    return `${protocol}//${baseDomain}${portSuffix}`;
   }
 
-  if (isLocal) {
-    return `${protocol}//${cleanPortalId}.localhost${portSuffix}`;
-  }
-
-  return `${protocol}//${cleanPortalId}.tgi360.org`;
+  return `${protocol}//${cleanPortalId}.${baseDomain}${portSuffix}`;
 }
 
 /**
