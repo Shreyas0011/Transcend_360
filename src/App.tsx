@@ -151,11 +151,9 @@ function AppRoutes() {
           <Route
             path="/hostel/*"
             element={
-              <SubdomainGuard portalId="hostel">
-                <Suspense fallback={<PageLoader module="Hostel Portal" />}>
-                  <HostelModule />
-                </Suspense>
-              </SubdomainGuard>
+              <Suspense fallback={<PageLoader module="Hostel Portal" />}>
+                <HostelModule />
+              </Suspense>
             }
           />
           <Route path="/transportation/*" element={<PortalRedirect portalId="transportation" />} />

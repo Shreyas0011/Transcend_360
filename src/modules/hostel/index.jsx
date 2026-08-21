@@ -20,7 +20,7 @@ const DashboardDispatcher = () => {
   let user = reduxUser;
 
   if (!user) {
-    const stored = localStorage.getItem('t360_user');
+    const stored = localStorage.getItem('t360_user') || localStorage.getItem('hostel_user');
     if (stored) {
       try { user = JSON.parse(stored); } catch (e) {}
     }
@@ -30,7 +30,7 @@ const DashboardDispatcher = () => {
     return <Navigate to={getDashboardRedirect(user.role)} replace />;
   }
 
-  return <Navigate to="/hostel/student" replace />;
+  return <Navigate to="/hostel/login" replace />;
 };
 
 export const HostelModule = () => {
