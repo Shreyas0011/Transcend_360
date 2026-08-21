@@ -4,11 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import { Menu, X, LogOut, LayoutDashboard, Shield, ChevronDown } from 'lucide-react';
 import { SSOModal } from './SSOModal';
 
-import { navigateToPortal } from '../utils/domain';
-
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout, currentView, setCurrentView, generateSSOToken } = useAuth();
+  const { user, isAuthenticated, logout, currentView, setCurrentView } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -48,7 +46,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', view: 'landing', action: () => navigate('/') },
     { name: 'Dashboard', view: 'dashboard', action: () => navigate('/dashboard') },
-    { name: 'Hostel ERP', view: 'hostel', action: () => navigateToPortal('hostel', generateSSOToken('hostel')) },
+    { name: 'Hostel ERP', view: 'hostel', action: () => navigate('/hostel') },
     { name: 'Announcements', view: 'announcements', action: () => handleNavClick('#announcements') },
     { name: 'Support', view: 'support', action: () => handleNavClick('#support') },
   ];

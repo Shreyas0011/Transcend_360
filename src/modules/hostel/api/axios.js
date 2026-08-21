@@ -2,16 +2,25 @@
 import axios from 'axios';
 import * as db from '../utils/db';
 
+const HOSTEL_API_URL =
+  import.meta.env.VITE_HOSTEL_API_URL ||
+  import.meta.env.VITE_API_URL ||
+  'https://hostel-portal-backend.onrender.com/api';
+
+const USE_MOCK =
+  import.meta.env.VITE_USE_MOCK === 'true';
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: HOSTEL_API_URL || 'http://localhost:5000/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Setup mock adapter to process requests locally via localStorage database
-axiosInstance.defaults.adapter = async function (config) {
+// Setup mock adapter to process requests locally via localStorage database if mock mode is active
+if (USE_MOCK) {
+  axiosInstance.defaults.adapter = async function (config) {
   // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 0));
 
@@ -398,6 +407,7 @@ axiosInstance.defaults.adapter = async function (config) {
     });
   }
 };
+}
 
 // Request interceptor for Bearer token
 axiosInstance.interceptors.request.use(

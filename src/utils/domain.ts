@@ -53,10 +53,19 @@ export function getPortalUrl(portalId: PortalSubdomain | string): string {
   return `${protocol}//${cleanPortalId}.${baseDomain}${portSuffix}`;
 }
 
-/**
- * Handles cross-subdomain navigation with SSO token.
- */
 export function navigateToPortal(portalId: string, ssoToken?: string) {
+  const cleanPortalId = portalId.toLowerCase();
+  
+  // Hostel Portal is hosted directly on main domain without subdomain reroute
+  if (cleanPortalId === 'hostel') {
+    const targetPath = '/hostel';
+    if (window.location.pathname.startsWith('/hostel')) {
+      return;
+    }
+    window.location.href = ssoToken ? `${targetPath}?sso_token=${encodeURIComponent(ssoToken)}` : targetPath;
+    return;
+  }
+
   const baseUrl = getPortalUrl(portalId);
   if (ssoToken) {
     const url = new URL(baseUrl);

@@ -147,8 +147,17 @@ function AppRoutes() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
 
-          {/* Legacy route redirects to Subdomains */}
-          <Route path="/hostel/*" element={<PortalRedirect portalId="hostel" />} />
+          {/* Hostel Portal on TGI360 Main Domain */}
+          <Route
+            path="/hostel/*"
+            element={
+              <SubdomainGuard portalId="hostel">
+                <Suspense fallback={<PageLoader module="Hostel Portal" />}>
+                  <HostelModule />
+                </Suspense>
+              </SubdomainGuard>
+            }
+          />
           <Route path="/transportation/*" element={<PortalRedirect portalId="transportation" />} />
           <Route path="/facilities/*" element={<PortalRedirect portalId="facilities" />} />
 

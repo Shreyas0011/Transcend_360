@@ -51,6 +51,10 @@ export const LandingPage: React.FC = () => {
 
   const triggerAuthHandshake = (portal: typeof servicePortals[0]) => {
     if (portal.status !== 'active') return;
+    if (portal.id === 'hostel') {
+      navigate('/hostel');
+      return;
+    }
     const token = generateSSOToken(portal.id);
     navigateToPortal(portal.id, token);
   };

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, HelpCircle, FileText, Compass, ExternalLink } from 'lucide-react';
 import { navigateToPortal } from '../utils/domain';
 
 export const Footer: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <footer id="support" className="bg-[#080B16] border-t border-brand-white/10 pt-16 pb-24 md:pb-12 text-sm text-brand-textSecondary relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,7 +48,7 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => navigateToPortal('hostel')} 
+                  onClick={() => navigate('/hostel')} 
                   className="flex items-center gap-1.5 hover:text-brand-white transition-colors text-left"
                 >
                   <Compass size={14} className="text-brand-gold" />
